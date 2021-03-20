@@ -1,4 +1,10 @@
 from django import forms
 
 class HelloForm(forms.Form):
-  check = forms.NullBooleanField(label='Checkbox')
+  data = [
+    ('one', 'radio 1'),
+    ('two', 'radio 2'),
+    ('three', 'radio 3'),
+  ]
+
+  choice = forms.ChoiceField(label='radio', choices=data, widget=forms.RadioSelect())
