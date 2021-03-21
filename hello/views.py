@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from .models import Friend
 from .forms import FriendForm
 from .forms import FindForm
+from django.db.models import Q
 
 def index(request):
     data = Friend.objects.all()
@@ -61,8 +62,7 @@ def find(request):
         msg = 'search result: '
         form = FindForm(request.POST)
         str = request.POST['find']
-        val = str.split()
-        data = Friend.objects.filter(age__gte = val[0], age__lte = val[1])
+        data = Friend.objects.filter(Q(name__contains = str) | Q(mail__contains = str))
     else:
         msg = 'search words...'
         form = FindForm()
