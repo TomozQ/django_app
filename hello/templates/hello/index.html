@@ -8,17 +8,22 @@
 </head>
 <body>
     <h1>{{ title }}</h1>
+    <p>{{ msg |safe }}</p>
     <table>
         <tr>
-            <th>data</th>
-            <th></th>
-            <th></th>
+            <th>id</th>
+            <th>name</th>
+            <th>age</th>
+            <th>mail</th>
+            <th>birthday</th>
         </tr>
     {% for item in data %}
         <tr>
-            <td>{{ item }}</td>
-            <td><a href="{% url 'edit' item.id %}">EDIT</a></td>
-            <td><a href="{% url 'delete' item.id %}">DELETE</a></td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.age }}</td>
+            <td>{{ item.mail }}</td>
+            <td>{{ item.birthday }}</td>
         </tr>
     {% endfor %}
     </table>

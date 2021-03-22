@@ -5,11 +5,20 @@ from .models import Friend
 from .forms import FriendForm
 from .forms import FindForm
 from django.db.models import Q
+from django.db.models import Count, Sum, Avg, Min, Max
 
 def index(request):
     data = Friend.objects.all()
+    re1 = Friend.objects.aggregate(Count('age'))
+    re2 = Friend.objects.aggregate(Sum('age'))
+    re3 = Friend.objects.aggregate(Avg('age'))
+    re4 = Friend.objects.aggregate(Min('age'))
+    re5 = Friend.objects.aggregate(Max('age'))
+
+    msg = 'Count: '+ str(re1['age__count']) + '<br>Sum: ' + str(re2['age__sum']) + '<br>Avg: ' + str(re3['age__avg']) + '<br>Min: ' + str(re4['age__min']) + '<br>Max: ' + str(re5['age__max'])
     params = {
         'title': 'Hello',
+        'msg': msg,
         'data': data,
     }
 
@@ -63,7 +72,7 @@ def find(request):
         form = FindForm(request.POST)
         str = request.POST['find']
         list = str.split()
-        data = Friend.objects.filter(name__in = list)
+        data = Friend.objects.all()[ int(list[0]) : int(list[1]) ]
     else:
         msg = 'search words...'
         form = FindForm()
