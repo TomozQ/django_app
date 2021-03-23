@@ -15,7 +15,16 @@ class FindForm( forms.Form ):
 #   min = forms.IntegerField(label = 'Min', min_value = 10)
 #   max = forms.IntegerField(label = 'Max', max_value = 10)
   
+# class CheckForm( forms.Form ):
+#   date = forms.DateField(label = 'Date', input_formats = ['%d'])
+#   time = forms.TimeField(label = 'Time')
+#   datetime = forms.DateTimeField(label = 'DateTime')
+
 class CheckForm( forms.Form ):
-  date = forms.DateField(label = 'Date', input_formats = ['%d'])
-  time = forms.TimeField(label = 'Time')
-  datetime = forms.DateTimeField(label = 'DateTime')
+  str = forms.CharField(label = 'String')
+  
+  def clean( self ):
+    cleaned_data = super().clean()
+    str = cleaned_data['str']
+    if( str.lower().startswith('no')):
+      raise forms.ValidationError("you input 'NO!'")
